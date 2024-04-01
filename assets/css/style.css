@@ -20,7 +20,7 @@ body {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 40%; /* Could be more or less, depending on screen size */
   }
 
   /* The Close Button */
@@ -39,17 +39,23 @@ body {
   align-content: center;
 }
 
-/* Modal Body */
-/* .modal-body {padding: 2px 16px;} */
-
 .modal-footer {
   padding: 2px 8px;
   align-items: center;
-  color: white;
-} 
+  color: white;  }
+  
+  .project-late {
+    background-color: yellow
+  }
+  
+  .project-now {
+    background-color:red;
+  }
 
- @keyframes animatetop {
+
+
+ /* @keyframes animatetop {
   from {top: -300px; opacity: 0}
   to {top: 0; opacity: 1}
 }
-        
+         */

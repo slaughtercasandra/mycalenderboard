@@ -11,10 +11,10 @@ function generateTaskId() {
 function createTaskCard(task) {
         const taskCard = $('<div>')
           .addClass('card project-card draggable my-3')
-          .attr('data-project-id', project.id);
-        const cardHeader = $('<div>').addClass('card-header h4').text(task.name);
+          .attr('data-task-id', task.id);
+        const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
         const cardBody = $('<div>').addClass('card-body');
-        const cardDescription = $('<p>').addClass('card-text').text(task.type);
+        const cardDescription = $('<p>').addClass('card-text').text(task.Description);
         const cardDueDate = $('<p>').addClass('card-text').text(task.dueDate);
         const cardDeleteBtn = $('<button>')
           .addClass('btn btn-danger delete')
@@ -28,7 +28,7 @@ if (project.dueDate && project.status !== 'done') {
     const taskDueDate = dayjs(project.dueDate, 'DD/MM/YYYY');
 
     // ? If the task is due today, make the card yellow. If it is overdue, make it red.
-    if (now.isSameorbefore(taskDueDate, 'day')) {
+    if (now.isSame(taskDueDate, 'day')) {
       taskCard.addClass('bg-warning text-white');
     } else if (now.isAfter(taskDueDate)) {
       taskCard.addClass('bg-danger text-white');
@@ -43,7 +43,29 @@ if (project.dueDate && project.status !== 'done') {
   // ? Return the card so it can be appended to the correct lane.
   return taskCard;
 
-
+  function printProjectData() {
+    const projects = readProjectsFromStorage();
+  
+    // ? Empty existing project cards out of the lanes
+    const todoList = $('#todo-cards');
+    todoList.empty();
+  
+    const inProgressList = $('#in-progress-cards');
+    inProgressList.empty();
+  
+    const doneList = $('#done-cards');
+    doneList.empty();
+  
+    // ? Loop through projects and create project cards for each status
+    for (let project of projects) {
+      if (project.status === 'to-do') {
+        todoList.append(createProjectCard(project));
+      } else if (project.status === 'in-progress') {
+        inProgressList.append(createProjectCard(project));
+      } else if (project.status === 'done') {
+        doneList.append(createProjectCard(project));
+      }
+    }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
