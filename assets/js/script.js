@@ -4,8 +4,15 @@ let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-
-}
+  const newTask = {
+    // ? Here we use a tool called `crypto` to generate a random id for our project. This is a unique identifier that we can use to find the project in the array. `crypto` is a built-in module that we can use in the browser and Nodejs.
+    id: crypto.randomUUID(),
+    name: Title,
+    type: Description,
+    dueDate: Date,
+    status: 'to-do',
+  };
+ }
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
@@ -28,7 +35,7 @@ if (project.dueDate && project.status !== 'done') {
     const taskDueDate = dayjs(project.dueDate, 'DD/MM/YYYY');
 
     // ? If the task is due today, make the card yellow. If it is overdue, make it red.
-    if (now.isSame(taskDueDate, 'day')) {
+    if (now.isSameorbefore(taskDueDate, 'day')) {
       taskCard.addClass('bg-warning text-white');
     } else if (now.isAfter(taskDueDate)) {
       taskCard.addClass('bg-danger text-white');
@@ -81,7 +88,25 @@ function renderTaskList() {
 function handleAddTask(event){
 
 }
+const handleFormSubmit = function (event) {
+//   event.preventDefault();
 
+//   const nameInput = nameInputEl.val();
+//   const commentInput = commentInputEl.val();
+
+//   if (!nameInput || !commentInput) {
+//     console.log('You need to fill out the form!');
+//     return;
+//   }
+
+//   printGuestData(nameInput, commentInput);
+
+//   // reset form
+//   nameInputEl.val('');
+//   commentInputEl.val('');
+// };
+
+// formEl.on('submit', handleFormSubmit);
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
 
@@ -97,12 +122,7 @@ $(document).ready(function () {
 
 });
 
-$(function () {
-    $('#datepicker').datepicker({
-      changeMonth: true,
-      changeYear: true,
-    });
-  });
+
   
   // Add interaction here
   //
@@ -115,13 +135,7 @@ $(function () {
 
 
 // $(function(){
-//     $('#myForm').on('submit', function(e){
-//       e.preventDefault();
-//       $.post('http://www.somewhere.com/path/to/post', 
-//          $('#myForm').serialize(), 
-//          function(data, status, xhr){
-//            // do something here with response;
-//          });
+//
 //     });
 // });
 // // Get the modal

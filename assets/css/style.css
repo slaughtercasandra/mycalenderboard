@@ -11,39 +11,6 @@ body {
     margin: 0 auto;
   }
   
-  .task-card:hover {
-    cursor: grab;
-  }
-
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
-  }
-
-  /* The Close Button */
-  /* .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  Example */
-/* Modal Header */
-.modal-header {
-  padding: 2px 8px;
-  background-color: #5cb85c;
-  color: white;
-  align-content: center;
-}
-
-.modal-footer {
-  padding: 2px 8px;
-  align-items: center;
-  color: white;  }
-  
   .project-late {
     background-color: yellow
   }
