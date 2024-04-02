@@ -162,7 +162,23 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-
+  const title = document.getElementById('title');
+  const name = document.getElementById('name');
+  const content = document.getElementById('content');
+  const button = document.getElementById('button')
+  // make button sumbit to next page
+  button.addEventListener( "click" , (event) => {
+      console.log("title has changed")
+      const blog ={ title: title.value , name: name.value , content: content.value 
+      }
+      const storage=JSON.parse(localStorage.getItem("blogs")) || []
+     storage.push(blog)
+      console.log(event.target.value)
+       // write code to save to local stora
+  localStorage.setItem("blogs" , JSON.stringify(storage))
+  window.location="blog.html"
+  }
+  )
 //   const formEl = $('#guestbook-form');
 // const nameInputEl = $('#name-input');
 // const commentInputEl = $('#comment-input');
