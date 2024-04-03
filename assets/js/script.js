@@ -36,13 +36,41 @@ function handleAddTask() {
   mytasks.push(newTask);
   localStorage.setItem("mytasks", JSON.stringify(mytasks));
   console.log(mytasks);
-
 }
 
-
 // Todo: create a function to create a task card
-function createTaskCard(task) {
-
+function createTaskCard() {
+    const taskCard = $('<div>')
+      .addClass('card project-card draggable my-3')
+      .attr('data-project-id', project.id);
+    const cardHeader = $('<div>').addClass('card-header h4').text(title.taskTitle);
+    const cardBody = $('<div>').addClass('card-body');
+    const cardDescription = $('<p>').addClass('card-text').text(taskdescription.description);
+    const cardDueDate = $('<p>').addClass('card-text').text(duedate.dueDate);
+    const cardDeleteBtn = $('<button>')
+      .addClass('btn btn-danger delete')
+      .text('Delete')
+      .attr('data-project-id', project.id);
+    cardDeleteBtn.on('click', handleDeleteProject);
+  
+    // ? Sets the card background color based on due date. Only apply the styles if the dueDate exists and the status is not done.
+    if (project.dueDate && project.status !== 'done') {
+      const now = dayjs();
+      const taskDueDate = dayjs(project.dueDate, 'DD/MM/YYYY');
+  
+      // ? If the task is due today, make the card yellow. If it is overdue, make it red.
+      if (now.isSame(taskDueDate, 'day')) {
+        taskCard.addClass('bg-warning text-white');
+      } else if (now.isAfter(taskDueDate)) {
+        taskCard.addClass('bg-danger text-white');
+        cardDeleteBtn.addClass('border-light');
+      }
+    }
+    cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+    taskCard.append(cardHeader, cardBody);
+  
+    // ? Return the card so it can be appended to the correct lane.
+    return taskCard;
 }
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
