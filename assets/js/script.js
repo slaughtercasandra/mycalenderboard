@@ -10,68 +10,55 @@ let mytasks = JSON.parse(localStorage.getItem("task"))
 
 
 // const button = document.getElementById('#add')
-$("#add").on("click", function(e){ 
-   e.preventDefault();
-// button.addEventListener("click" , (event) => {
+$("#add").on("click", function (e) {
+  e.preventDefault();
+  // button.addEventListener("click" , (event) => {
   console.log("title has changed")
-  const task = {
-    title: TaskTitle.value, duedate:datepicker.value, description:taskDescription.value,
+  // window.location="index.html"
+  handleAddTask()
+});
+
+function handleAddTask() {
+  const taskTitle = $('#TaskTitle').val();
+  const dueDate = $('#datepicker').val();
+  const description = $('#taskdescription').val();
+  // const button = $('#add');
+
+  const newTask = {
+    id: crypto.randomUUID(),//  Here we use a tool called `crypto` to generate a random id for our project. 
+    title: taskTitle,
+    duedate: dueDate,
+    taskdescription: description,
   };
-// let mytasks = JSON.parse(localStorage.getItem("task"))
-//  mytasks.push(task);
- localStorage.setItem("mytasks" , JSON.stringify(tasks));
- console.log(mytasks);
+  console.log(newTask)
 
-// window.location="index.html"
- }
-)
+  let mytasks = JSON.parse(localStorage.getItem("mytasks")) || []
+  mytasks.push(newTask);
+  localStorage.setItem("mytasks", JSON.stringify(mytasks));
+  console.log(mytasks);
 
-  function handleAddTask() {
-    const taskTitle = $('#TaskTitle').val();
-    const dueDate = $('#datepicker').val();
-    const description = $('#taskdescription').val();
-    // const button = $('#add');
-  
-    const newTask = {
-     id: crypto.randomUUID(),//  Here we use a tool called `crypto` to generate a random id for our project. 
-      title: taskTitle,
-      description: description,
-      date: dueDate,
-    };
-    console.log(newTask)
-  }
-  
+}
 
 
+// Todo: create a function to create a task card
+function createTaskCard(task) {
 
+}
+// Todo: create a function to render the task list and make cards draggable
+function renderTaskList() {
 
-  // Retrieve tasks and nextId from localStorage
-  // let taskList = JSON.parse(localStorage.getItem("tasks"));
-  // let nextId = JSON.parse(localStorage.getItem("nextId"));
+}
 
-  // Todo: create a function to generate a unique task id
-  function generateTaskId() {
-  }
+// Todo: create a function to handle adding a new t
 
-  // Todo: create a function to create a task card
-  function createTaskCard(task) {
+// Todo: create a function to handle deleting a task
+function handleDeleteTask(event) {
 
-  }
-  // Todo: create a function to render the task list and make cards draggable
-  function renderTaskList() {
+}
 
-  }
-
-  // Todo: create a function to handle adding a new t
-
-  // Todo: create a function to handle deleting a task
-  function handleDeleteTask(event) {
-
-  }
-
-  // Todo: create a function to handle dropping a task into a new status lane
-  function handleDrop(event, ui) {
-  }
+// Todo: create a function to handle dropping a task into a new status lane
+function handleDrop(event, ui) {
+}
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 
 // function readTasksFromStorage() {
