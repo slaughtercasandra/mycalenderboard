@@ -11,14 +11,13 @@ body {
     margin: 0 auto;
   }
   
-  .project-late {
+  .duetoday {
     background-color: yellow
   }
   
-  .project-now {
+  .pastdue {
     background-color:red;
-  }
-
+  } 
 
 
  /* @keyframes animatetop {
