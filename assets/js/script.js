@@ -7,7 +7,7 @@ $(document).ready(function () {
   // Render the task list
   renderTaskList();
 
-  // Make the columns droppable
+  // Make the lanes droppable
   $('.lane').droppable({
     accept: '.draggable',
     drop: handleDrop,
@@ -67,7 +67,20 @@ function renderTaskList() {
     } else {
       taskcard.appendTo(toDo);
     }
-    taskcard.draggable({ revert: "invalid", containment: "#todo-lane, #in-progress-lane, #done-lane", helper: "clone" }); // Make the task cards draggable and contain them within their respective lanes
+    taskcard.addClass('draggable'); // Add draggable class to the task card
+  });
+
+  // Make the newly added task cards draggable
+  $('.draggable').draggable({
+    revert: "invalid",
+    helper: "clone",
+    cursor: "move"
+  });
+
+  // Make all lanes droppable
+  $('.lane').droppable({
+    accept: '.draggable',
+    drop: handleDrop,
   });
 }
 
@@ -89,21 +102,46 @@ function createTaskCard(task) {
     .text('Delete')
     .attr('data-task-id', task.id);
 
+  // Parse due date using Day.js
+  const dueDate = dayjs(task.duedate);
+
+  // Check if the task description contains keywords indicating past due, overdue, due today, or due soon
+  const description = task.taskdescription.toLowerCase();
+  if (description.includes('past due') || description.includes('over due')) {
+    taskCard.addClass('pastdue');
+  } else if (description.includes('due today') || description.includes('due soon')) {
+    taskCard.addClass('duetoday');
+  }
+
   cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
   taskCard.append(cardHeader, cardBody);
   return taskCard;
 }
 
+
+ 
 function handleDrop(event, ui) {
   const taskId = ui.draggable.attr('id');
   const newStatus = event.target.id;
 
-  mytasks.forEach((task) => {
-    if (task.id === taskId) {
-      task.status = newStatus;
-    }
-  });
+  // Find the column where the card is dropped
+  const droppedColumnId = $(event.target).closest('.lane').attr('id');
 
-  localStorage.setItem('mytasks', JSON.stringify(mytasks));
-  renderTaskList();
+  // Check if the dropped card already exists in the new lane
+  const existingCard = $(`#${droppedColumnId}-cards #${taskId}`);
+
+  if (existingCard.length === 0) {
+    mytasks.forEach((task) => {
+      if (task.id === taskId) {
+        task.status = newStatus;
+      }
+    });
+
+    // Update the dropped card's status and re-render the task list
+    localStorage.setItem('mytasks', JSON.stringify(mytasks));
+    renderTaskList();
+
+    // Move the dropped card into the correct column
+    ui.draggable.appendTo(`#${droppedColumnId}-cards`);
+  }
 }
